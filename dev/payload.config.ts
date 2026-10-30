@@ -1,9 +1,9 @@
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { MongoMemoryReplSet } from 'mongodb-memory-server'
 import path from 'path'
 import { buildConfig } from 'payload'
-import { payloadPluginAltTextGenerator } from 'payload-plugin-alt-text-generator'
+import { altTextGenerator } from '@balt1794/payload-plugin-alt-text-generator'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
@@ -48,9 +48,10 @@ const buildConfigWithMemoryDB = async () => {
         },
       },
     ],
-    db: mongooseAdapter({
-      ensureIndexes: true,
-      url: process.env.DATABASE_URL || '',
+    db: sqliteAdapter({
+      client: {
+        url: process.env.DATABASE_URL || `file:${path.resolve(dirname, 'dev.db')}`,
+      },
     }),
     editor: lexicalEditor(),
     email: testEmailAdapter,
@@ -58,10 +59,9 @@ const buildConfigWithMemoryDB = async () => {
       await seed(payload)
     },
     plugins: [
-      payloadPluginAltTextGenerator({
-        collections: {
-          posts: true,
-        },
+      altTextGenerator({
+        autoGenerate: true,
+        collections: ['media'],
       }),
     ],
     secret: process.env.PAYLOAD_SECRET || 'test-secret_key',

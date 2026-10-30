@@ -48,3 +48,13 @@ next-env.d.ts
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# local dev project
+dev/*.db
+dev/media
+dev/.env
+dev/AGENTS.md
+dev/CLAUDE.md
+AGENTS.md
+CLAUDE.md
+*.tgz

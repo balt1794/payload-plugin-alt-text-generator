@@ -1,1 +1,1 @@
-export { BeforeDashboardServer } from '../components/BeforeDashboardServer.js'
+export { AltTextView } from '../components/AltTextView.js'

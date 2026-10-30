@@ -19,13 +19,13 @@
       "@payload-config": [
         "./payload.config.ts"
       ],
-      "payload-plugin-alt-text-generator": [
+      "@balt1794/payload-plugin-alt-text-generator": [
         "../src/index.ts"
       ],
-      "payload-plugin-alt-text-generator/client": [
+      "@balt1794/payload-plugin-alt-text-generator/client": [
         "../src/exports/client.ts"
       ],
-      "payload-plugin-alt-text-generator/rsc": [
+      "@balt1794/payload-plugin-alt-text-generator/rsc": [
         "../src/exports/rsc.ts"
       ]
     },

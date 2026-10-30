@@ -1,48 +1,43 @@
 {
-  "name": "payload-plugin-alt-text-generator",
+  "name": "@balt1794/payload-plugin-alt-text-generator",
   "version": "1.0.0",
-  "description": "A blank template to get started with Payload 3.0",
+  "description": "Generate SEO-friendly alt text for the images in your Payload CMS media library: one at a time, in bulk, or automatically on upload.",
   "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./src/index.ts",
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./client": {
-      "import": "./src/exports/client.ts",
-      "types": "./src/exports/client.ts",
-      "default": "./src/exports/client.ts"
+      "import": "./dist/exports/client.js",
+      "types": "./dist/exports/client.d.ts",
+      "default": "./dist/exports/client.js"
     },
     "./rsc": {
-      "import": "./src/exports/rsc.ts",
-      "types": "./src/exports/rsc.ts",
-      "default": "./src/exports/rsc.ts"
+      "import": "./dist/exports/rsc.js",
+      "types": "./dist/exports/rsc.d.ts",
+      "default": "./dist/exports/rsc.js"
     }
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "pnpm copyfiles && pnpm build:types && pnpm build:swc",
-    "build:swc": "swc ./src -d ./dist --config-file .swcrc --strip-leading-paths",
+    "build": "npm run clean && npm run copyfiles && npm run build:types && npm run build:swc",
+    "build:swc": "swc ./src -d ./dist --config-file .swcrc --strip-leading-paths --ignore \"**/__tests__/**\"",
     "build:types": "tsc --outDir dist --rootDir ./src",
     "clean": "rimraf {dist,*.tsbuildinfo}",
     "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/",
     "dev": "next dev dev --turbo",
-    "dev:generate-importmap": "pnpm dev:payload generate:importmap",
-    "dev:generate-types": "pnpm dev:payload generate:types",
-    "dev:payload": "cross-env PAYLOAD_CONFIG_PATH=./dev/payload.config.ts payload",
-    "generate:importmap": "pnpm dev:generate-importmap",
-    "generate:types": "pnpm dev:generate-types",
-    "lint": "eslint",
-    "lint:fix": "eslint ./src --fix",
-    "test": "pnpm test:int && pnpm test:e2e",
-    "test:e2e": "playwright test",
-    "test:int": "vitest"
+    "dev:generate-importmap": "cross-env PAYLOAD_CONFIG_PATH=./dev/payload.config.ts payload generate:importmap",
+    "dev:generate-types": "cross-env PAYLOAD_CONFIG_PATH=./dev/payload.config.ts payload generate:types",
+    "lint": "eslint ./src",
+    "prepublishOnly": "npm run build",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -56,6 +51,7 @@
     "@playwright/test": "1.63.0",
     "@swc-node/register": "1.10.9",
     "@swc/cli": "0.6.0",
+    "@swc/core": "^1.16.20",
     "@types/node": "22.19.9",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
@@ -80,40 +76,36 @@
     "vitest": "4.0.18"
   },
   "peerDependencies": {
-    "payload": "^3.92.1"
+    "@payloadcms/next": "^3.92.0",
+    "@payloadcms/ui": "^3.92.0",
+    "payload": "^3.92.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "engines": {
-    "node": "^22.23.4 || >=24.22.1",
-    "pnpm": "^9 || ^10 || ^11"
+    "node": ">=20.9.0"
   },
+  "author": "Bryam Loaiza <balt1794@gmail.com>",
+  "homepage": "https://github.com/balt1794/payload-plugin-alt-text-generator#readme",
+  "bugs": {
+    "url": "https://github.com/balt1794/payload-plugin-alt-text-generator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balt1794/payload-plugin-alt-text-generator.git"
+  },
+  "keywords": [
+    "payload",
+    "payloadcms",
+    "payload-plugin",
+    "alt-text",
+    "accessibility",
+    "seo",
+    "ai",
+    "images",
+    "media"
+  ],
   "publishConfig": {
-    "exports": {
-      ".": {
-        "import": "./dist/index.js",
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "./client": {
-        "import": "./dist/exports/client.js",
-        "types": "./dist/exports/client.d.ts",
-        "default": "./dist/exports/client.js"
-      },
-      "./rsc": {
-        "import": "./dist/exports/rsc.js",
-        "types": "./dist/exports/rsc.d.ts",
-        "default": "./dist/exports/rsc.js"
-      }
-    },
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp",
-      "esbuild",
-      "unrs-resolver"
-    ]
-  },
-  "registry": "https://registry.npmjs.org/",
-  "dependencies": {}
+    "access": "public"
+  }
 }

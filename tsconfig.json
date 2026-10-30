@@ -31,5 +31,10 @@
     "./src/**/*.tsx",
     "./dev/next-env.d.ts",
     ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/__tests__/**",
+    "node_modules",
+    "dist"
   ]
 }
